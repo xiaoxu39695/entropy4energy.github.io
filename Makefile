@@ -33,7 +33,7 @@ NODEDIR=node_modules
 NODEBIN=$(NODEDIR)/.bin
 NPMINST=npm install
 
-.PHONY: all clean realclean html css js
+.PHONY: all clean realclean html css js install-css install-js install-html install-py
 
 all: html css js media
 
@@ -71,9 +71,15 @@ $(JSBLD)/slideshow.js: $(JSSRC)/slideshow.js
 media:
 	$(RSYNC) $(SRCDIR)/$@ $(BLDDIR)/$@/
 
+# python
+install-py:
+	pip install -r requirements.txt
+
 # General targets
 $(NODEDIR)/%:
 	test -d $@ || $(NPMINST) $(@:$(NODEDIR)/%=%)
+
+install-packages: install-css install-js install-html install-py
 
 clean:
 	-rm -rf $(BLDDIR)
