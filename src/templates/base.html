@@ -58,17 +58,19 @@
       {% block content %}{% endblock %}
     </div>
     <div class="sidebar">
+      {% for news_items in data.news|slice(news_max) %}
       <div class="sidebar-content">
         <h2>Latest News</h2>
-        {% for news in data.news|slice(news_max) %}
+          {% for news in news_items %}
           <div class="sidebar-news-item">
             <div class="sidebar-news-item-title">
               <a href="news.html#{{ news.id }}">{{ news.title }}</a>
             </div>
             <div class="sidebar-news-item-date">{{ news.date }}</div>
           </div>
-        {% endfor %}
+          {% endfor %}
       </div>
+      {% endfor %}
     </div>
   </div>
   <footer>
