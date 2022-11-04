@@ -47,11 +47,14 @@ $(CSSBLD)/%:
 	@mkdir -p $(@D)
 	rsync $(RSYNCFLAGS) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
 
-js:
+js: $(JSBLD)/slideshow.js
+
+$(JSBLD)/slideshow.js: $(JSSRC)/slideshow.js
 	npm install google-closure-compiler
+	$(JSC) $(JSCFLAGS) --js $^ --js_output_file $@
 
 media:
-	rsync $(RSYNCFLAGS) $(DISTDIR)/$@ $(BUILDDIR)/$@ 
+	rsync $(RSYNCFLAGS) $(DISTDIR)/$@ $(BUILDDIR)/$@
 
 clean:
 	-rm -rf $(BUILDDIR)
