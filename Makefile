@@ -14,7 +14,7 @@ HTMLC=$(NODEBIN)/html-minifier-terser
 HTMLCFLAGS=--collapse-whitespace --collapse-inline-tag-whitespace \
 	--remove-comments --conservative-collapse --remove-optional-tags \
 	--remove-empty-attributes --remove-redundant-attributes \
-	--remove-script-type-attributes --use-short-doctype
+	--remove-script-type-attributes --use-short-doctype --minify-js true
 
 # CSS
 CSSSRC=$(SRCDIR)/css
