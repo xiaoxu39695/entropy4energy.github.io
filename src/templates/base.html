@@ -57,18 +57,18 @@
       <h1>{{ data.section | title }}</h1>
       {% block content %}{% endblock %}
     </div>
-  </div>
-  <div class="sidebar">
-    <div class="sidebar-content">
-      <h2>Latest News</h2>
-      {% for news in data.news|slice(news_max) %}
-        <div class="sidebar-news-item">
-          <div class="sidebar-news-item-title">
-            <a href="news.html#{{ news.id }}">{{ news.title }}</a>
+    <div class="sidebar">
+      <div class="sidebar-content">
+        <h2>Latest News</h2>
+        {% for news in data.news|slice(news_max) %}
+          <div class="sidebar-news-item">
+            <div class="sidebar-news-item-title">
+              <a href="news.html#{{ news.id }}">{{ news.title }}</a>
+            </div>
+            <div class="sidebar-news-item-date">{{ news.date }}</div>
           </div>
-          <div class="sidebar-news-item-date">{{ news.date }}</div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      </div>
     </div>
   </div>
   <footer>
