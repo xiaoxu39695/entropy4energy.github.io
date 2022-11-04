@@ -25,7 +25,9 @@ SSCFLAGS=-u cssnano -u autoprefixer --no-map
 JSC=$(NODEBIN)/google-closure-compiler
 JSCFLAGS=-O ADVANCED #--language_out ECMASCRIPT5_STRICT  # uncomment for IE
 
+# rsync
 RSYNCFLAGS=-a --delete --prune-empty-dirs
+RSYNC=rsync $(RSYNCFLAGS)
 
 .PHONY: all clean realclean html css js
 
@@ -45,7 +47,7 @@ css-static: $(CSSBLD)/academicons-1.9.1
 
 $(CSSBLD)/%:
 	@mkdir -p $(@D)
-	rsync $(RSYNCFLAGS) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
+	$(RSYNC) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
 
 js: $(JSBLD)/slideshow.js
 
@@ -54,7 +56,7 @@ $(JSBLD)/slideshow.js: $(JSSRC)/slideshow.js
 	$(JSC) $(JSCFLAGS) --js $^ --js_output_file $@
 
 media:
-	rsync $(RSYNCFLAGS) $(DISTDIR)/$@ $(BUILDDIR)/$@
+	$(RSYNC) $(DISTDIR)/$@ $(BUILDDIR)/$@/
 
 clean:
 	-rm -rf $(BUILDDIR)
