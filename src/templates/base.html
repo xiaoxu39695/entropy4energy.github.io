@@ -42,10 +42,10 @@
     </label>
     <ul>
       {% for header in data.headers %}
-        {% set href = "." if header == "home" else "{{ header | title }}" %}
-        {% set cls = 'class="active"' if header == data.section else "" %}
+        {% set href = "." if header == "home" else "%s.html" % header %}
+        {% set cls = ' class="active"' if header == data.section else "" %}
         <li>
-          <a id="nav_{{ header }}" href="{{ href }}" {{ cls }}>
+          <a id="nav_{{ header }}" href="{{ href }}"{{ cls }}>
             {{ header | title }}
           </a>
         </li>
