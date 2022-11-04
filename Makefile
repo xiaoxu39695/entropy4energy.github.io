@@ -7,7 +7,7 @@ CSSSRC=$(SRCDIR)/css
 CSSBLD=$(BLDDIR)/css
 JSSRC=$(SRCDIR)/js
 JSBLD=$(BLDDIR)/js
-NODEBIN=node_modules/.bin
+NODEBIN=./node_modules/.bin
 
 # HTML minifier
 HTMLC=$(NODEBIN)/html-minifier-terser
