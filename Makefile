@@ -6,6 +6,9 @@ BLDDIR=dist
 DATADIR=$(SRCDIR)/data
 TEMPLATEDIR=$(SRCDIR)/templates
 
+# Build file
+BUILDPY=$(SRCDIR)/build.py
+
 # HTML
 HTMLC=$(NODEBIN)/html-minifier-terser
 HTMLCFLAGS=--collapse-whitespace --collapse-inline-tag-whitespace \
@@ -40,10 +43,14 @@ NPMINST=npm install
 all: html css js media
 
 # HTML targets
-PREREQSALL=$(DATADIR)/news.json $(TEMPLATEDIR)/base.html
-html: html-install
+PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
+HTMLFILES=news
+html: html-install $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 
 html-install: $(NODEDIR)/html-minifier-terser
+
+$(BLDDIR)/news.html: $(PREREQSALL) $(TEMPLATEDIR)/news.html
+	python $(BUILDPY) $(@F) | $(HTMLC) $(HTMLCFLAGS) -o $@
 
 # CSS targets
 css: css-static css-compiled
