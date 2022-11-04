@@ -7,7 +7,8 @@ CSSSRC=$(SRCDIR)/css
 CSSBLD=$(BLDDIR)/css
 JSSRC=$(SRCDIR)/js
 JSBLD=$(BLDDIR)/js
-NODEBIN=./node_modules/.bin
+NODEDIR=node_modules
+NODEBIN=$(NODEDIR)/.bin
 
 # HTML minifier
 HTMLC=$(NODEBIN)/html-minifier-terser
@@ -17,29 +18,38 @@ HTMLCFLAGS=--collapse-whitespace --collapse-inline-tag-whitespace \
 	--remove-script-type-attributes --use-short-doctype
 
 # CSS stylesheet minifier flags
-SASS=$(NODEBIN)/sass
-SSC=$(NODEBIN)/postcss
+SASS=./$(NODEBIN)/sass
+SSC=./$(NODEBIN)/postcss
 SSCFLAGS=-u cssnano -u autoprefixer --no-map
 
 # JavaScript compiler
-JSC=$(NODEBIN)/google-closure-compiler
+JSC=./$(NODEBIN)/google-closure-compiler
 JSCFLAGS=-O ADVANCED #--language_out ECMASCRIPT5_STRICT  # uncomment for IE
 
 # rsync
 RSYNCFLAGS=-a --delete --prune-empty-dirs
 RSYNC=rsync $(RSYNCFLAGS)
 
+# npm
+NPMINST=npm install
+
 .PHONY: all clean realclean html css js
 
 all: html css js media
 
-html:
-	npm install html-minifier-terser
+# HTML targets
+html: html-install
 
-css: css-static $(CSSBLD)/main.css
+html-install: $(NODEDIR)/html-minifier-terser
+
+# CSS targets
+css: css-static css-compiled
+
+css-compiled: css-install $(CSSBLD)/main.css
+
+css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NODEDIR)/cssnano
 
 $(CSSBLD)/main.css: $(CSSSRC)/main.scss
-	npm install sass postcss-cli autoprefixer cssnano
 	@mkdir -p $(@D)
 	$(SASS) $< | $(SSC) $(SSCFLAGS) -o $@
 
@@ -49,17 +59,24 @@ $(CSSBLD)/%:
 	@mkdir -p $(@D)
 	$(RSYNC) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
 
-js: $(JSBLD)/slideshow.js
+# JavaScript
+js: js-install $(JSBLD)/slideshow.js
+
+js-install: $(NODEDIR)/google-closure-compiler
 
 $(JSBLD)/slideshow.js: $(JSSRC)/slideshow.js
-	npm install google-closure-compiler
 	$(JSC) $(JSCFLAGS) --js $^ --js_output_file $@
 
+# Static targets
 media:
-	$(RSYNC) $(DISTDIR)/$@ $(BUILDDIR)/$@/
+	$(RSYNC) $(SRCDIR)/$@ $(BLDDIR)/$@/
+
+# General targets
+$(NODEDIR)/%:
+	test -d $@ || $(NPMINST) $(@:$(NODEDIR)/%=%)
 
 clean:
-	-rm -rf $(BUILDDIR)
+	-rm -rf $(BLDDIR)
 
-realclean:
-	-rm -rf node_modules $(BUILDDIR)
+realclean: clean
+	-rm -rf $(NODEDIR)
