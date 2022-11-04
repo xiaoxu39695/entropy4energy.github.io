@@ -79,7 +79,7 @@ $(JSBLD)/slideshow.js: $(JSSRC)/slideshow.js
 
 # Static targets
 media:
-	$(RSYNC) $(SRCDIR)/$@ $(BLDDIR)/$@/
+	$(RSYNC) $(SRCDIR)/$@ $(BLDDIR)/
 
 # python
 install-py:
