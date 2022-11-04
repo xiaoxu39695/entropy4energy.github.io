@@ -34,8 +34,18 @@ all: html css js media
 html:
 	npm install html-minifier-terser
 
-css:
-	npm install sass cssnano
+css: css-static $(CSSBLD)/main.css
+
+$(CSSBLD)/main.css: $(CSSSRC)/main.scss
+	npm install sass postcss-cli autoprefixer cssnano
+	@mkdir -p $(@D)
+	$(SASS) $< | $(SSC) $(SSCFLAGS) -o $@
+
+css-static: $(CSSBLD)/academicons-1.9.1
+
+$(CSSBLD)/%:
+	@mkdir -p $(@D)
+	rsync $(RSYNCFLAGS) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
 
 js:
 	npm install google-closure-compiler
