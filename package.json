@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "cssnano": "^5.1.14",
+    "google-closure-compiler": "^20221004.0.0",
+    "html-minifier-terser": "^7.0.0",
+    "sass": "^1.56.0"
+  }
+}
