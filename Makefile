@@ -4,7 +4,7 @@
 SRCDIR=src
 BLDDIR=dist
 
-# HTML minifier
+# HTML
 HTMLC=$(NODEBIN)/html-minifier-terser
 HTMLCFLAGS=--collapse-whitespace --collapse-inline-tag-whitespace \
 	--remove-comments --conservative-collapse --remove-optional-tags \
