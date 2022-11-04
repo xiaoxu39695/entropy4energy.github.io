@@ -3,6 +3,8 @@
 # Directories
 SRCDIR=src
 BLDDIR=dist
+DATADIR=$(SRCDIR)/data
+TEMPLATEDIR=$(SRCDIR)/templates
 
 # HTML
 HTMLC=$(NODEBIN)/html-minifier-terser
