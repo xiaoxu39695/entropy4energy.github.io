@@ -22,7 +22,7 @@ SSC=$(NODEBIN)/postcss
 SSCFLAGS=-u cssnano -u autoprefixer --no-map
 
 # JavaScript compiler
-JSC=i$(NODEBIN)/google-closure-compiler
+JSC=$(NODEBIN)/google-closure-compiler
 JSCFLAGS=-O ADVANCED #--language_out ECMASCRIPT5_STRICT  # uncomment for IE
 
 RSYNCFLAGS=-a --delete --prune-empty-dirs
