@@ -40,6 +40,7 @@ NPMINST=npm install
 all: html css js media
 
 # HTML targets
+PREREQSALL=$(DATADIR)/news.json $(TEMPLATEDIR)/base.html
 html: html-install
 
 html-install: $(NODEDIR)/html-minifier-terser
