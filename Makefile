@@ -50,6 +50,7 @@ html: html-install $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 html-install: $(NODEDIR)/html-minifier-terser
 
 $(BLDDIR)/news.html: $(PREREQSALL) $(TEMPLATEDIR)/news.html
+	@mkdir -p $(@D)
 	python $(BUILDPY) $(@F) | $(HTMLC) $(HTMLCFLAGS) -o $@
 
 # CSS targets
