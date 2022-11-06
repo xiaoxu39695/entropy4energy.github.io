@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% macro pub_html(pub, pub_number) %}
+  {% if pub.authors|length == 1 %}
+    {% set authors = pub.authors[0] %}
+  {% elif pub.authors|length == 2 %}
+    {% set authors = " and ".join(pub.authors) %}
+  {% else %}
+    {% set authors = ", ".join(pub.authors[:-1]) + ", and " + pub.authors[-1] %}
+  {% endif %}
+
+  {% if "journal" not in pub and "titleBook" not in pub %}
+    {% set status = "submitted" %}
+  {% elif "doi" not in pub and "url" not in pub %}
+    {% set status = "in press" %}
+  {% endif %}
+
+  {% if "doi" in pub %}
+    {% set url = '<a href="https://doi.org/%s" target="_blank">DOI:%s</a>' % (pub.doi, pub.doi) %}
+  {% elif "arxiv" in pub %}
+    {% set url = '<a href="https://arxiv.org/abs/%s" target="_blank">ArXiV</a>' % pub.arxiv %}
+  {% endif %}
+  <div class="publication">
+    <div class="publication-img">
+      {% if "filename" in pub %}
+        <a href="media/publications/{{ pub.filename }}.pdf" target="_blank">
+          <img src="media/publications/{{ pub.filename }}.png" alt="Graphical abstract for {{ pub.title }}">
+        </a>
+      {% endif %}
+    </div>
+    <div class="publication-number">{{ pub_number }}.</div>
+    <div class="publication-data">
+      <span class="publication-authors">{{ authors }}</span>
+      <span class="publication-title">{{ pub.title }}</span>
+      {% if "titleBook" in pub %}
+        in <span class="publication-book">{{ pub.titleBook }}</span>
+      {% endif %}
+      {% if "journal" in pub %}
+        <span class="publication-journal">{{ pub.journal }}</span>
+      {% endif %}
+      {% if "volume" in pub %}
+        <span class="publication-volume">{{ pub.volume }}</span>
+      {% endif %}
+      {% if "issue" in pub %}
+        <span class="publication-issue">{{ pub.issue }}</span>
+      {% endif %}
+      {% if status %}
+      {% endif %}
+      {% if url%}
+        <span class="publication-url">{{ url }}</span>
+      {% endif %}
+      {% if "filename" in pub %}
+        (<a href="media/publications/{{ pub.filename }}.pdf" target="_blank">PDF</a>)
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro build_publications(pubs) %}
+  {% for pub in pubs %}
+    {% if loop.index == 0 or pub.year != pubs[loop.index - 1] %}
+      <h2 id="publications_{{ pub.year }}">{{ pub.year }}</h2>
+    {% endif %}
+    {% set pub_number = loop.length - loop.index + 1 %}
+    {{ pub_html(pub, pub_number) }}
+  {% endfor %}
+{% endmacro %}
+
+{% block content %}
+  <div class="nav-block">
+    <a href="#articles">Journal Articles</a>
+    <a href="#chapters">Book Chapters</a>
+  </div>
+  <h1 id="articles">Journal Articles</h1>
+  <div class="publications-section" id="publications_articles">
+    {{ build_publications(data.publications.journal) }}
+  </div>
+  <h1 id="chapters">Book Chapters</h1>
+  <div class="publications-section" id="publications_books">
+    {{ build_publications(data.publications.book) }}
+  </div>
+{% endblock %}
