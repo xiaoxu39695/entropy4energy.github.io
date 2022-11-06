@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <h1>News</h1>
   <div id="news_items" class="news">
     {% for news in data.news %}
       <div class="news-item" id="{{ news.id }}">
