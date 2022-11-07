@@ -49,11 +49,7 @@ html: html-install $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 
 html-install: $(NODEDIR)/html-minifier-terser
 
-$(BLDDIR)/news.html: $(PREREQSALL) $(TEMPLATEDIR)/news.html
-	@mkdir -p $(@D)
-	python $(BUILDPY) $(@F) | $(HTMLC) $(HTMLCFLAGS) -o $@
-
-$(BLDDIR)/publications.html: $(PREREQSALL) $(TEMPLATEDIR)/publications.html $(DATADIR)/publications.json
+$(BLDDIR)/%.html: $(PREREQSALL) $(TEMPLATEDIR)/%.html $(DATADIR)/%.json
 	@mkdir -p $(@D)
 	python $(BUILDPY) $(@F) | $(HTMLC) $(HTMLCFLAGS) -o $@
 
