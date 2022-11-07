@@ -1,25 +1,6 @@
 {% extends "base.html" %}
 
 {% macro pub_html(pub, pub_number) %}
-  {% if pub.authors|length == 1 %}
-    {% set authors = pub.authors[0] %}
-  {% elif pub.authors|length == 2 %}
-    {% set authors = " and ".join(pub.authors) %}
-  {% else %}
-    {% set authors = ", ".join(pub.authors[:-1]) + ", and " + pub.authors[-1] %}
-  {% endif %}
-
-  {% if "journal" not in pub and "titleBook" not in pub %}
-    {% set status = "submitted" %}
-  {% elif "doi" not in pub and "url" not in pub %}
-    {% set status = "in press" %}
-  {% endif %}
-
-  {% if "doi" in pub %}
-    {% set url = '<a href="https://doi.org/%s" target="_blank">DOI:%s</a>' % (pub.doi, pub.doi) %}
-  {% elif "arxiv" in pub %}
-    {% set url = '<a href="https://arxiv.org/abs/%s" target="_blank">ArXiV</a>' % pub.arxiv %}
-  {% endif %}
   <div class="publication">
     <div class="publication-img">
       {% if "filename" in pub %}
@@ -30,7 +11,7 @@
     </div>
     <div class="publication-number">{{ pub_number }}.</div>
     <div class="publication-data">
-      <span class="publication-authors">{{ authors }}</span>
+      <span class="publication-authors">{{ pub.authors }}</span>
       <span class="publication-title">{{ pub.title }}</span>
       {% if "titleBook" in pub %}
         in <span class="publication-book">{{ pub.titleBook }}</span>
@@ -44,10 +25,12 @@
       {% if "issue" in pub %}
         <span class="publication-issue">{{ pub.issue }}</span>
       {% endif %}
-      {% if status %}
+      {% if "status" in pub %}
+        <span class="publication-status">{{ pub.status }}</span>
       {% endif %}
-      {% if url%}
-        <span class="publication-url">{{ url }}</span>
+       (<span class="publication-year">{{ pub.year }}</span>)
+      {% if "url" in pub %}
+        <span class="publication-url">{{ pub.url }}</span>
       {% endif %}
       {% if "filename" in pub %}
         (<a href="media/publications/{{ pub.filename }}.pdf" target="_blank">PDF</a>)
@@ -57,12 +40,11 @@
 {% endmacro %}
 
 {% macro build_publications(pubs) %}
-  {% for pub in pubs %}
-    {% if loop.index == 0 or pub.year != pubs[loop.index - 1] %}
-      <h2 id="publications_{{ pub.year }}">{{ pub.year }}</h2>
-    {% endif %}
-    {% set pub_number = loop.length - loop.index + 1 %}
-    {{ pub_html(pub, pub_number) }}
+  {% for year, pubs_year in pubs|dictsort(reverse=true) %}
+    <h2 id="publications_{{ year }}">{{ year }}</h2>
+    {% for pub in pubs_year %}
+      {{ pub_html(pub, pub_number) }}
+    {% endfor %}
   {% endfor %}
 {% endmacro %}
 
