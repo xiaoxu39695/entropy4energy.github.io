@@ -64,7 +64,7 @@ css-compiled: css-install $(CSSBLD)/main.css
 
 css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NODEDIR)/cssnano
 
-$(CSSBLD)/main.css: $(CSSSRC)/main.scss
+$(CSSBLD)/%.css: $(CSSSRC)/%.scss
 	@mkdir -p $(@D)
 	$(SASS) $< | $(SSC) $(SSCFLAGS) -o $@
 
@@ -79,7 +79,7 @@ js: js-install $(JSBLD)/slideshow.js
 
 js-install: $(NODEDIR)/google-closure-compiler
 
-$(JSBLD)/slideshow.js: $(JSSRC)/slideshow.js
+$(JSBLD)/%.js: $(JSSRC)/%.js
 	$(JSC) $(JSCFLAGS) --js $^ --js_output_file $@
 
 # Static targets
