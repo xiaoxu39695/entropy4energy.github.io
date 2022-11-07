@@ -38,7 +38,7 @@ NODEDIR=node_modules
 NODEBIN=$(NODEDIR)/.bin
 NPMINST=npm install
 
-.PHONY: all clean realclean html css js css-install js-install html-install py-install
+.PHONY: all clean realclean html css css-static css-compiled js css-install js-install html-install py-install
 
 all: html css js media
 
