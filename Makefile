@@ -66,7 +66,7 @@ css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NO
 
 $(CSSBLD)/%.css: $(CSSSRC)/%.scss
 	@mkdir -p $(@D)
-	$(SASS) $< | $(SSC) $(SSCFLAGS) -o $@
+	$(SASS) $< | $(SSC) $(SSCFLAGS) > $@
 
 css-static: $(CSSBLD)/academicons-1.9.1
 
