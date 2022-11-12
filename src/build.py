@@ -1,4 +1,5 @@
 import argparse
+import functools
 from jinja2 import Environment, FileSystemLoader
 import json
 import os
@@ -55,7 +56,100 @@ def process_publications(data):
     data["publications"] = pubs
 
 
+def process_team(data):
+    def sort_members(a, b):
+        if a["id"] == "corey_oses":
+            return 1
+        if b["id"] == "corey_oses":
+            return -1
+        if a["rank"] != b["rank"]:
+            return 1 if a["rank"] < b["rank"] else -1
+        if a["name"] != b["name"]:
+            return 1 if a["name"] < b["name"] else -1
+        return 0
+
+    groups = [
+        {
+            "positions": ["Professor", "Assistant Professor"],
+            "title": "",
+        },
+        {
+            "positions": ["Postdoctoral Associate"],
+            "title": "Postdocs",
+        },
+        {
+            "positions": ["Graduate Student"],
+            "title": "Graduate Students",
+        },
+        {
+            "positions": ["Undergraduate Student"],
+            "title": "Undergraduate Students",
+        },
+    ]
+
+    socials = [
+        {
+            "base": "https://scholar.google.com/citations?user=",
+            "icon": '<i class="ai ai-google-scholar-square ai-2x ai-inverse"></i>',
+            "key": "gscholar",
+        },
+        {
+            "base": "https://orcid.org/",
+            "icon": '<i class="ai ai-orcid-square ai-2x ai-inverse"></i>',
+            "key": "orcid",
+        },
+    ]
+
+    # Assign team members to their groups
+    team = {}
+    for curr_alumn in ["current", "alumni"]:
+        team[curr_alumn] = [{"title": grp["title"], "members": []}
+                            for grp in groups]
+        # Catch-all group if no title fits
+        team[curr_alumn].append({"title": "Affiliates", "members": []})
+
+    for member_id, member in data["team"].items():
+        member["id"] = member_id
+        member_socials = []
+        if "socials" in member:
+            for social in socials:
+                key = social["key"]
+                if key in member["socials"]:
+                    member_socials.append({
+                        "href": f"{social['base']}{member['socials'][key]}",
+                        "icon": social["icon"],
+                    })
+        member["socials"] = member_socials
+
+        curr_alum = "alumni" if "alumnus" in member else "current"
+        g = 0
+        for group in groups:
+            p = 0
+            for position in group["positions"]:
+                if position in member["titles"]:
+                    member["rank"] = p  # for sorting
+                    team[curr_alum][g]["members"].append(member)
+                    break
+                p += 1
+            if p < len(group["positions"]):
+                break
+            g += 1
+        if g == len(groups):
+            team[curr_alum][-1]["members"].append(member)
+
+    for groups in team.values():
+        for group in groups:
+            group["members"] = sorted(group["members"],
+                                      key=functools.cmp_to_key(sort_members),
+                                      reverse=True)
+
+    # Discard empty groups
+    data["team"] = {key: [grp for grp in item if len(grp["members"]) > 0]
+                    for key, item in team.items()}
+
+
 PROCESS_DATA = {
+    "team": process_team,
     "publications": process_publications,
 }
 

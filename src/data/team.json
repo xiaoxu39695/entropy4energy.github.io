@@ -1,0 +1,20 @@
+{
+  "corey_oses": {
+    "contact": "corey at jhu.edu",
+    "name": "Corey Oses",
+    "socials": {
+      "gscholar": "Za7m4CMAAAAJ",
+      "orcid": "0000-0002-3790-1377"
+    },
+    "titles": [
+      "Assistant Professor"
+    ]
+  },
+  "keith_clark": {
+    "contact": "kclark96 at jhu.edu",
+    "name": "Keith Clark",
+    "titles": [
+      "Graduate Student"
+    ]
+  }
+}

@@ -44,7 +44,7 @@ all: html css js media
 
 # HTML targets
 PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
-HTMLFILES=news publications
+HTMLFILES=news publications team
 html: html-install $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 
 html-install: $(NODEDIR)/html-minifier-terser
