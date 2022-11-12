@@ -149,8 +149,8 @@ def process_team(data):
 
 
 PROCESS_DATA = {
-    "team": process_team,
     "publications": process_publications,
+    "team": process_team,
 }
 
 
