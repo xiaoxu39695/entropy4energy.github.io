@@ -38,9 +38,9 @@ NODEDIR=node_modules
 NODEBIN=$(NODEDIR)/.bin
 NPMINST=npm install
 
-.PHONY: all clean realclean html css css-static css-compiled js css-install js-install html-install py-install
+.PHONY: all clean realclean html css css-static css-compiled js static css-install js-install html-install py-install
 
-all: html css js media
+all: html css js static
 
 # HTML targets
 PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
@@ -83,8 +83,10 @@ $(JSBLD)/%.js: $(JSSRC)/%.js
 	$(JSC) $(JSCFLAGS) --js $^ --js_output_file $@
 
 # Static targets
-media:
-	$(RSYNC) $(SRCDIR)/$@ $(BLDDIR)/
+static: $(BLDDIR)/media $(BLDDIR)/CNAME
+
+$(BLDDIR)/%:
+	$(RSYNC) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(BLDDIR)/
 
 # python
 py-install:
