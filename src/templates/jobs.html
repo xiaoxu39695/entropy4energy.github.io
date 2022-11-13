@@ -4,51 +4,46 @@
   <h1>Jobs</h1>
   {% for job in data.jobs %}
     <div class="job">
-      <span class="job-date">
-        Opens: {{ job.date }}<br>
+      <div class="job-date">
+        <div class="job-date-open">Opens: {{ job.date }}</div>
         {% if job.close %}
-          Closes: {{ job.close }}<br>
+          <div class="job-date-close">Closes: {{ job.close }}</div>
         {% endif %}
-        Status: <span class="job-stat-open">Open</span>
-      </span>
-      <span class="job-title-and-flyer">
-        <b>{{ job.title }}</b>
-        {% if job.flyer %}
-          (<a href="media/jobs/{{ job.flyer }}.pdf" download="{{ job.flyer}}.pdf" target="_blank">PDF</a>)
-        {% endif %}
-      </span>
-      <div class="job-description">{{ job.description }}</div>
-      <div class="job-quals-header"><br><b>Qualifications<br></div>
-      <div class="job-quals-text">
-        <ol type="A">
-          {% for qual in job.quals %}
-            <li>{{ qual }}</li>
-          {% endfor %}
-        </ol>
+        <div>Status: <span class="job-date-stat open">Open</span></div>
       </div>
-      <div class="job-appInstructions-header">
-        <b>Application Instructions</b>
-      </div>
-      <div class="job-appInstructions-text">
-        {{ job.appInstructions }}
-        <br><br>
-        Please submit your application at
-        <a href="{{ job.appUrl }}" target="_blank">{{ job.appUrl }}</a>
-      </div>
-      <div class="job-url"></div>
-      <div class="job-EqualEmploymentOpportunityStatement-header">
-        <br><b>Equal Employment Opportunity StatementM>
-      </div>
-      <div class ="job-EqualEmploymentOpportunityStatement-text">
-        The Johns Hopkins University is committed to equal opportunity for its faculty,
-        staff, and students. To that end, the university does not discriminate on the
-        basis of sex, gender, marital status, pregnancy, race, color, ethnicity,
-        national origin, age, disability, religion, sexual orientation, gender identity
-        or expression, veteran status or other legally protected characteristic.
-        The university is committed to providing qualified individuals access to all
-        academic and employment programs, benefits and activities on the basis of
-        demonstrated ability, performance and merit without regard to personal factors
-        that are irrelevant to the program involved.
+      <div class="job-description">
+        <h2>
+          {{ job.title }}
+          {% if job.flyer %}
+            <span class="job-description-flyer">(<a href="media/jobs/{{ job.flyer }}.pdf" download="{{ job.flyer}}.pdf" target="_blank">PDF</a>)</span>
+          {% endif %}
+        </h2>
+        <p>{{ job.description }}</p>
+        <h3>Qualifications</h3>
+        <p>
+          <ol type="A">
+            {% for qual in job.quals %}
+              <li>{{ qual }}</li>
+            {% endfor %}
+          </ol>
+        </p>
+        <h3>Application Instructions</h3>
+        <p>{{ job.appInstructions }}</p>
+        <p>Please submit your application at
+          <a href="{{ job.appUrl }}" target="_blank">{{ job.appUrl }}</a>
+        </p>
+        <h3>Equal Employment Opportunity Statement</h3>
+        <p>
+          The Johns Hopkins University is committed to equal opportunity for its faculty,
+          staff, and students. To that end, the university does not discriminate on the
+          basis of sex, gender, marital status, pregnancy, race, color, ethnicity,
+          national origin, age, disability, religion, sexual orientation, gender identity
+          or expression, veteran status or other legally protected characteristic.
+          The university is committed to providing qualified individuals access to all
+          academic and employment programs, benefits and activities on the basis of
+          demonstrated ability, performance and merit without regard to personal factors
+          that are irrelevant to the program involved.
+        </p>
       </div>
     </div>
   {% endfor %}

@@ -395,55 +395,46 @@ footer {
 .job {
   display: grid;
   grid-column-gap: $date-column-gap;
-  grid-template-areas: "a b" "a c" "a d" "a e" "a f" "a g" "a h" "a i";
   grid-template-columns: $date-column-width auto;
   margin-bottom: 20px;
   text-align: justify;
+
+  li {
+    padding-left: 10px;
+  }
+
   &-date {
-    grid-area: a;
     font-weight: bold;
-  }
-  &-stat {
-    &-open {
-      color: green;
-    }
-    &-closed {
-      color: red;
-    }
-  }
-  &-title-flyer {
-    grid-area: b;
-    font-weight: bold;
-  }
-  &-description {
-    grid-area: c;
-    text-align: justify;
-  }
-  &-quals {
-    &-header {
-      grid-area: d;
-    }
-    &-text {
-      grid-area: e;
-      li {
-        padding-left: 10px;
+    &-stat {
+      &.open {
+        color: green;
+      }
+      &.closed {
+        color: red;
       }
     }
   }
-  &-appInstructions {
-    &-header {
-      grid-area: f;
+
+  &-description {
+    text-align: justify;
+
+    h2 {
+      border-bottom: none;
+      font-size: 1em;
+      margin: 0;
     }
-    &-text {
-      grid-area: g;
+
+    h3 {
+      font-size: 1em;
+      margin-bottom: 0;
     }
-  }
-  &-EqualEmploymentOpportunityStatement {
-    &-header {
-      grid-area: h;
+
+    p {
+      margin-top: 0;
     }
-    &-text {
-      grid-area: i;
+
+    &-flyer {
+      font-weight: normal;
     }
   }
 }
@@ -577,7 +568,6 @@ footer {
     display: grid;
     grid-column-gap: 0px;
     grid-template-columns: 30em auto;
-    grid-template-areas: "b " "a" "c" "d" "e" "f" "g" "h" "i";
     margin-bottom: 20px;
   }
 }
