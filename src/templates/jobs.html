@@ -5,7 +5,7 @@
   {% for job in data.jobs %}
     <div class="job">
       <div class="job-date">
-        <div class="job-date-open">Opens: {{ job.date }}</div>
+        <div class="job-date-open">Opens: {{ job.open }}</div>
         {% if job.close %}
           <div class="job-date-close">Closes: {{ job.close }}</div>
         {% endif %}
