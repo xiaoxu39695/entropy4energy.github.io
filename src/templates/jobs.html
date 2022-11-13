@@ -5,9 +5,9 @@
   {% for job in data.jobs %}
     <div class="job">
       <div class="job-date">
-        <div class="job-date-open">Opens: {{ job.open }}</div>
+        <div>Opens: <span class="job-date-open">{{ job.open }}</span></div>
         {% if job.close %}
-          <div class="job-date-close">Closes: {{ job.close }}</div>
+          <div>Closes: <span class="job-date-close">{{ job.close }}</span></div>
         {% endif %}
         <div>Status: <span class="job-date-stat open">Open</span></div>
       </div>
