@@ -3,9 +3,9 @@
 {% macro pub_html(pub, pub_number) %}
   <div class="publication">
     <div class="publication-img">
-      {% if "filename" in pub %}
+      {% if "imgfile" in pub and "filename" in pub %}
         <a href="media/publications/{{ pub.filename }}.pdf" target="_blank">
-          <img src="media/publications/{{ pub.filename }}.png" alt="Graphical abstract for {{ pub.title }}">
+          <img src="media/publications/{{ pub.imgfile }}.png" alt="Graphical abstract for {{ pub.title }}">
         </a>
       {% endif %}
     </div>

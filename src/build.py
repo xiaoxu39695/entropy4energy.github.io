@@ -23,23 +23,23 @@ def process_home(data):
     img_base = os.path.join(BASE_PATH, "media/publications/")
     slides = []
     for pub in data["publications"]["journal"]:
-        doi_key = ""
-        url = ""
         if "doi" in pub:
-            doi_key = "doi"
-            url = f"https://doi.org/{pub['doi']}"
+            pub["url"] = f"https://doi.org/{pub['doi']}"
         elif "arxiv" in pub:
-            doi_key = "arxiv"
-            url = f"https://arxiv.org/{pub['arxiv']}"
-        else:
+            pub["url"] = f"https://arxiv.org/{pub['arxiv']}"
+        elif "url" not in pub:
             continue
-        img_file = f"{pub[doi_key].replace('/', '_')}.png"
+
+        if "filename" not in pub:
+            continue
+        img_file = os.path.join(img_base, f"{pub['filename']}.png")
         if not os.path.exists(os.path.join(img_base, img_file)):
             continue
+
         slide = {
-            "img": f"media/publications/{img_file}",
+            "img": f"media/publications/{pub['filename']}.png",
             "text": pub["title"],
-            "url": url,
+            "url": pub["url"],
         }
         slides.append(slide)
         if len(slides) == nslides_max:
@@ -54,6 +54,7 @@ def process_publications(data):
         "journal": {
         },
     }
+    file_base = os.path.join(BASE_PATH, "media/publications")
     for typ in pubs.keys():
         npubs = len(data["publications"][typ])
         for p, pub in enumerate(data["publications"][typ]):
@@ -73,9 +74,20 @@ def process_publications(data):
                 pub["status"] = "in press"
 
             if "doi" in pub:
-                url = f'<a href="https://doi.org/{pub["doi"]} target="_blank">DOI:{pub["doi"]}</a>'
+                pub["url"] = f'<a href="https://doi.org/{pub["doi"]}" target="_blank">DOI:{pub["doi"]}</a>'
             elif "arxiv" in pub:
-                url = f'<a href="https://arxiv.org/{pub["arxiv"]} target="_blank">ArXiV</a>'
+                pub["url"] = f'<a href="https://arxiv.org/{pub["arxiv"]}" target="_blank">ArXiV</a>'
+            elif "url" in pub:
+                pub["url"] = f'<a href="{pub["url"]}" target="_blank">publication</a>'
+
+            if "filename" in pub:
+                pdf_file = os.path.join(file_base, f"{pub['filename']}.pdf")
+                if not os.path.exists(pdf_file):
+                    del pub["filename"]
+            if "filename" in pub:
+                img_file = os.path.join(file_base, f"{pub['filename']}.png")
+                if os.path.exists(img_file):
+                    pub["imgfile"] = pub["filename"]
 
             year = pub["year"]
             if year not in pubs[typ].keys():
