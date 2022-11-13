@@ -154,12 +154,14 @@ def process_team(data):
     ]
 
     # Assign team members to their groups
-    team = {}
-    for curr_alumn in ["current", "alumni"]:
-        team[curr_alumn] = [{"title": grp["title"], "members": []}
-                            for grp in groups]
+    team = {
+        "alumni": [],
+        "current": [],
+    }
+    for key in team.keys():
+        team[key] = [{"title": grp["title"], "members": []} for grp in groups]
         # Catch-all group if no title fits
-        team[curr_alumn].append({"title": "Affiliates", "members": []})
+        team[key].append({"title": "Affiliates", "members": []})
 
     for member_id, member in data["team"].items():
         member["id"] = member_id
@@ -174,21 +176,21 @@ def process_team(data):
                     })
         member["socials"] = member_socials
 
-        curr_alum = "alumni" if "alumnus" in member else "current"
+        key = "alumni" if "alumnus" in member else "current"
         g = 0
         for group in groups:
             p = 0
             for position in group["positions"]:
                 if position in member["titles"]:
                     member["rank"] = p  # for sorting
-                    team[curr_alum][g]["members"].append(member)
+                    team[key][g]["members"].append(member)
                     break
                 p += 1
             if p < len(group["positions"]):
                 break
             g += 1
         if g == len(groups):
-            team[curr_alum][-1]["members"].append(member)
+            team[key][-1]["members"].append(member)
 
     for groups in team.values():
         for group in groups:
