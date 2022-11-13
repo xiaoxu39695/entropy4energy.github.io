@@ -75,7 +75,7 @@ $(CSSBLD)/%:
 	$(RSYNC) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
 
 # JavaScript
-js: js-install $(JSBLD)/slideshow.js
+js: js-install $(JSBLD)/slideshow.js $(JSBLD)/jobs.js
 
 js-install: $(NODEDIR)/google-closure-compiler
 
