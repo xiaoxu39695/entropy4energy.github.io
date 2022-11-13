@@ -1,3 +1,4 @@
+# Note: Do not run `make -j` after `make realclean` or the install targets will interfere
 .EXTRA_PREREQS=Makefile
 
 # Directories
