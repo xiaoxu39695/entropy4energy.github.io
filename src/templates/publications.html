@@ -41,7 +41,11 @@
 
 {% macro build_publications(pubs) %}
   {% for year, pubs_year in pubs|dictsort(reverse=true) %}
-    <h2 id="publications_{{ year }}">{{ year }}</h2>
+    {% if "titleBook" in pubs_year[0] %}
+      <h2 id="publications_book_{{ year }}">{{ year }}</h2>
+    {% else %}
+      <h2 id="publications_journal_{{ year }}">{{ year }}</h2>
+    {% endif %}
     {% for pub in pubs_year %}
       {{ pub_html(pub, pub_number) }}
     {% endfor %}
