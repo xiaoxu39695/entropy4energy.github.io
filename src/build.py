@@ -47,6 +47,18 @@ def process_home(data):
     data["slideshow"] = slides
 
 
+def process_jobs(data):
+    months = [
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"]
+    for job in data["jobs"]:
+        for month in months:
+            job["open"] = job["open"].replace(month, month[:3])
+            if "close" in job:
+                job["close"] = job["close"].replace(month, month[:3])
+
+
 def process_publications(data):
     pubs = {
         "book": {
@@ -191,6 +203,7 @@ def process_team(data):
 
 PROCESS_DATA = {
     "home": process_home,
+    "jobs": process_jobs,
     "publications": process_publications,
     "team": process_team,
 }
