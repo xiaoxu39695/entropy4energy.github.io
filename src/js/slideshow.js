@@ -17,5 +17,12 @@
     setTimeout(automaticSlideShow, 7000);
   }
 
+  for (const inp of document.querySelectorAll('input[name="slideshow_main_indicators"]')) {
+    const slide = inp.nextElementSibling
+    slide.addEventListener('click', () => {
+      document.getElementById('slideshow_main_play').checked = false;
+    });
+  }
+
   setTimeout(automaticSlideShow, 7000);
 })();
