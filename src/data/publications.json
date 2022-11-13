@@ -12,7 +12,7 @@
       "filename": "10.1002_9783527802265.ch7",
       "pages": "181&ndash;222",
       "status": "published",
-      "titleBook": "Materials Informatics: Methods, Tools and Applications",
+      "book": "Materials Informatics: Methods, Tools and Applications",
       "title": "Automated computation of materials properties",
       "type": "chapter",
       "url": "https://www.wiley.com/en-us/Materials+Informatics-p-9783527341214",
@@ -30,7 +30,7 @@
       "doi": "10.1007/978-3-319-50257-1_108-1",
       "filename": "10.1007_978-3-319-50257-1_108-1",
       "status": "published",
-      "titleBook": "Handbook of Materials Modeling. Volume 2 Applications: Current and Emerging Materials",
+      "book": "Handbook of Materials Modeling. Volume 2 Applications: Current and Emerging Materials",
       "title": "Machine learning and high-throughput approaches to magnetism",
       "type": "chapter",
       "year": 2018
@@ -94,7 +94,7 @@
       "filename": "10.1007_978-3-319-42913-7_63-2",
       "pages": "1&ndash;28",
       "status": "published",
-      "titleBook": "Handbook of Materials Modeling. Volume 1 Methods: Theory and Modeling",
+      "book": "Handbook of Materials Modeling. Volume 1 Methods: Theory and Modeling",
       "title": "The AFLOW Fleet for Materials Discovery",
       "type": "chapter",
       "year": 2018

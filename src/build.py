@@ -80,7 +80,7 @@ def process_publications(data):
                 authors = ", ".join(pub["authors"][:-1]) + ", and " + pub["authors"][-1]
             pub["authors"] = authors
 
-            if "journal" not in pub and "titleBook" not in pub:
+            if "journal" not in pub and "book" not in pub:
                 pub["status"] = "submitted"
             elif "doi" not in pub and "url" not in pub:
                 pub["status"] = "in press"
