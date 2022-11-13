@@ -44,7 +44,7 @@ all: html css js media
 
 # HTML targets
 PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
-HTMLFILES=news publications team
+HTMLFILES=news publications team index
 html: html-install $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 
 html-install: $(NODEDIR)/html-minifier-terser
@@ -52,6 +52,10 @@ html-install: $(NODEDIR)/html-minifier-terser
 $(BLDDIR)/%.html: $(PREREQSALL) $(TEMPLATEDIR)/%.html $(DATADIR)/%.json
 	@mkdir -p $(@D)
 	python $(BUILDPY) $(@F) | $(HTMLC) $(HTMLCFLAGS) -o $@
+
+$(BLDDIR)/index.html: $(PREREQSALL) $(TEMPLATEDIR)/home.html $(DATADIR)/publications.json
+	@mkdir -p $(@D)
+	python $(BUILDPY) home --extra_data publications | $(HTMLC) $(HTMLCFLAGS) -o $@
 
 # CSS targets
 css: css-static css-compiled

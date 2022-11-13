@@ -18,6 +18,35 @@ DATA_DIR = os.path.join(BASE_PATH, "data")
 TEMPLATE_DIR = os.path.join(BASE_PATH, "templates")
 
 
+def process_home(data):
+    nslides_max = 10
+    img_base = os.path.join(BASE_PATH, "media/publications/")
+    slides = []
+    for pub in data["publications"]["journal"]:
+        doi_key = ""
+        url = ""
+        if "doi" in pub:
+            doi_key = "doi"
+            url = f"https://doi.org/{pub['doi']}"
+        elif "arxiv" in pub:
+            doi_key = "arxiv"
+            url = f"https://arxiv.org/{pub['arxiv']}"
+        else:
+            continue
+        img_file = f"{pub[doi_key].replace('/', '_')}.png"
+        if not os.path.exists(os.path.join(img_base, img_file)):
+            continue
+        slide = {
+            "img": f"media/publications/{img_file}",
+            "text": pub["title"],
+            "url": url,
+        }
+        slides.append(slide)
+        if len(slides) == nslides_max:
+            break
+    data["slideshow"] = slides
+
+
 def process_publications(data):
     pubs = {
         "book": {
@@ -149,6 +178,7 @@ def process_team(data):
 
 
 PROCESS_DATA = {
+    "home": process_home,
     "publications": process_publications,
     "team": process_team,
 }
@@ -204,8 +234,9 @@ def build_html(section: str = "", extra_data: list = []) -> str:
     }
     with open(os.path.join(DATA_DIR, "news.json")) as f:
         data["news"] = json.loads(f.read())
-    if section != "news":
-        with open(os.path.join(DATA_DIR, f"{section}.json")) as f:
+    section_data_file = os.path.join(DATA_DIR, f"{section}.json")
+    if section != "news" and os.path.exists(section_data_file):
+        with open(section_data_file) as f:
             data[section] = json.loads(f.read())
     for extra in extra_data:
         extra_file = extra
