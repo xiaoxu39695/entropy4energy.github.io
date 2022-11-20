@@ -13,26 +13,26 @@
     <div class="publication-data">
       <span class="publication-authors">{{ pub.authors }}</span>
       <span class="publication-title">{{ pub.title }}</span>
-      {% if "book" in pub %}
+      {% if pub.book %}
         in <span class="publication-book">{{ pub.book }}</span>
       {% endif %}
-      {% if "journal" in pub %}
+      {% if pub.journal %}
         <span class="publication-journal">{{ pub.journal }}</span>
       {% endif %}
-      {% if "volume" in pub %}
+      {% if pub.volume %}
         <span class="publication-volume">{{ pub.volume }}</span>
       {% endif %}
-      {% if "issue" in pub %}
+      {% if pub.issue %}
         <span class="publication-issue">{{ pub.issue }}</span>
       {% endif %}
       {% if pub.status %}
         <span class="publication-status">{{ pub.status }}</span>
       {% endif %}
        (<span class="publication-year">{{ pub.year }}</span>)
-      {% if "url" in pub %}
+      {% if pub.url %}
         <span class="publication-url">{{ pub.url }}</span>
       {% endif %}
-      {% if "filename" in pub %}
+      {% if pub.filename %}
         (<a href="media/publications/{{ pub.filename }}.pdf" target="_blank">PDF</a>)
       {% endif %}
     </div>
@@ -41,7 +41,7 @@
 
 {% macro build_publications(pubs) %}
   {% for year, pubs_year in pubs|dictsort(reverse=true) %}
-    {% if "book" in pubs_year[0] %}
+    {% if pubs_year[0].book %}
       <h2 id="publications_book_{{ year }}">{{ year }}</h2>
     {% else %}
       <h2 id="publications_journal_{{ year }}">{{ year }}</h2>

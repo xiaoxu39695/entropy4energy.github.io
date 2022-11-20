@@ -9,7 +9,7 @@
         <span class="news-item-title">{{ news.title }}</span>
         <span class="news-item-text">{{ news.message }}</span>
         <span class="news-item-img">
-          {% if "picture" in news %}
+          {% news.picture %}
             <img src="media/news/{{ news.picture }}" alt="Image for news {{ news.title }}">
           {% endif %}
         </span>
