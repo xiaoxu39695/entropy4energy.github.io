@@ -40,7 +40,7 @@ NODEBIN=$(NODEDIR)/.bin
 NPMINST=npm install
 
 BUILDTARGETS=html css js static
-INSTALLTARGETS=install-packages css-install js-install html-install py-install
+INSTALLTARGETS=install-packages py-install npm-install css-install js-install html-install
 
 .PHONY: all clean realclean $(BUILDTARGETS) $(INSTALLTARGETS)
 
