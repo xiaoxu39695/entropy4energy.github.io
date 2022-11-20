@@ -5,9 +5,9 @@
     if (closeDate < today) {
       jobClosed.nextElementSibling.classList.remove('noscript');  // see jobs.html template
       const jobStatus = jobClosed.nextElementSibling.querySelector('.job-date-stat-text');
-      jobStatus.classList.remove("open");
-      jobStatus.classList.add("closed");
-      jobStatus.innerText = "Closed";
+      jobStatus.classList.remove('open');
+      jobStatus.classList.add('closed');
+      jobStatus.innerText = 'Closed';
     }
   }
 })();
