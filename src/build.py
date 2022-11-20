@@ -3,6 +3,7 @@ import functools
 from jinja2 import Environment, FileSystemLoader
 import json
 import os
+import re
 
 
 HEADERS = [
@@ -52,11 +53,13 @@ def process_jobs(data):
         "January", "February", "March", "April",
         "May", "June", "July", "August",
         "September", "October", "November", "December"]
+    months_replace = [(re.compile(re.escape(month), re.IGNORECASE), month[:3])
+                      for month in months]
     for job in data["jobs"]:
-        for month in months:
-            job["open"] = job["open"].replace(month, month[:3])
+        for repl in months_replace:
+            job["open"] = repl[0].sub(repl[1], job["open"])
             if "close" in job:
-                job["close"] = job["close"].replace(month, month[:3])
+                job["close"] = repl[0].sub(repl[1], job["close"])
 
 
 def process_publications(data):
