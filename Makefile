@@ -51,8 +51,6 @@ PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
 HTMLFILES=index publications team news jobs
 html: $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 
-html-install: $(NODEDIR)/html-minifier-terser
-
 $(BLDDIR)/%.html: $(PREREQSALL) $(TEMPLATEDIR)/%.html $(DATADIR)/%.json
 	@mkdir -p $(@D)
 	python $(BUILDPY) $(@F) | $(HTMLC) $(HTMLCFLAGS) -o $@
@@ -63,8 +61,6 @@ $(BLDDIR)/index.html: $(PREREQSALL) $(TEMPLATEDIR)/home.html $(DATADIR)/publicat
 
 # CSS targets
 css: $(CSSBLD)/academicons-1.9.1 $(CSSBLD)/main.css
-
-css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NODEDIR)/cssnano
 
 $(CSSBLD)/%.css: $(CSSSRC)/%.scss
 	@mkdir -p $(@D)
@@ -77,8 +73,6 @@ $(CSSBLD)/%:
 # JavaScript
 js: $(JSBLD)/slideshow.js $(JSBLD)/jobs.js
 
-js-install: $(NODEDIR)/google-closure-compiler
-
 $(JSBLD)/%.js: $(JSSRC)/%.js
 	$(JSC) $(JSCFLAGS) --js $^ --js_output_file $@
 
@@ -88,20 +82,24 @@ static: $(BLDDIR)/media $(BLDDIR)/CNAME
 $(BLDDIR)/%:
 	$(RSYNC) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(BLDDIR)/
 
-# python
-py-install:
-	pip install -r requirements.txt
-
-# General targets
-$(NODEDIR)/%:
-	test -d $@ || $(NPMINST) $(@:$(NODEDIR)/%=%)
-
+# Install targets
 install-packages: py-install npm-install
 
 npm-install:
 	$(MAKE) css-install
 	$(MAKE) js-install
 	$(MAKE) html-install
+
+py-install:
+	pip install -r requirements.txt
+
+css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NODEDIR)/cssnano
+html-install: $(NODEDIR)/html-minifier-terser
+js-install: $(NODEDIR)/google-closure-compiler
+
+$(NODEDIR)/%:
+	test -d $@ || $(NPMINST) $(@:$(NODEDIR)/%=%)
+
 
 clean:
 	-rm -rf $(BLDDIR)
