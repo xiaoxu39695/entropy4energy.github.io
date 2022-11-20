@@ -49,7 +49,7 @@ all: $(MAINTARGETS)
 # HTML targets
 PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
 HTMLFILES=index publications team news jobs
-html: html-install $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
+html: $(foreach HTML,$(HTMLFILES),$(BLDDIR)/$(HTML).html)
 
 html-install: $(NODEDIR)/html-minifier-terser
 
@@ -64,7 +64,7 @@ $(BLDDIR)/index.html: $(PREREQSALL) $(TEMPLATEDIR)/home.html $(DATADIR)/publicat
 # CSS targets
 css: css-static css-compiled
 
-css-compiled: css-install $(CSSBLD)/main.css
+css-compiled:$(CSSBLD)/main.css
 
 css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NODEDIR)/cssnano
 
@@ -79,7 +79,7 @@ $(CSSBLD)/%:
 	$(RSYNC) $(@:$(BLDDIR)/%=$(SRCDIR)/%) $(CSSBLD)/
 
 # JavaScript
-js: js-install $(JSBLD)/slideshow.js $(JSBLD)/jobs.js
+js: $(JSBLD)/slideshow.js $(JSBLD)/jobs.js
 
 js-install: $(NODEDIR)/google-closure-compiler
 
