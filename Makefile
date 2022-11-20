@@ -100,7 +100,12 @@ py-install:
 $(NODEDIR)/%:
 	test -d $@ || $(NPMINST) $(@:$(NODEDIR)/%=%)
 
-install-packages: css-install js-install html-install py-install
+install-packages: py-install npm-install
+
+npm-install:
+	$(MAKE) css-install
+	$(MAKE) js-install
+	$(MAKE) html-install
 
 clean:
 	-rm -rf $(BLDDIR)
