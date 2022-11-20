@@ -42,7 +42,7 @@ NPMINST=npm install
 BUILDTARGETS=html css js static
 INSTALLTARGETS=install-packages css-install js-install html-install py-install
 
-.PHONY: all clean realclean $(BUILDTARGETS) $(INSTALLTARGETS) css-static css-compiled
+.PHONY: all clean realclean $(BUILDTARGETS) $(INSTALLTARGETS)
 
 all: $(BUILDTARGETS)
 
@@ -62,17 +62,13 @@ $(BLDDIR)/index.html: $(PREREQSALL) $(TEMPLATEDIR)/home.html $(DATADIR)/publicat
 	python $(BUILDPY) home --extra_data publications | $(HTMLC) $(HTMLCFLAGS) -o $@
 
 # CSS targets
-css: css-static css-compiled
-
-css-compiled:$(CSSBLD)/main.css
+css: $(CSSBLD)/academicons-1.9.1 $(CSSBLD)/main.css
 
 css-install: $(NODEDIR)/sass $(NODEDIR)/postcss-cli $(NODEDIR)/autoprefixer $(NODEDIR)/cssnano
 
 $(CSSBLD)/%.css: $(CSSSRC)/%.scss
 	@mkdir -p $(@D)
 	$(SASS) $< | $(SSC) $(SSCFLAGS) > $@
-
-css-static: $(CSSBLD)/academicons-1.9.1
 
 $(CSSBLD)/%:
 	@mkdir -p $(@D)
