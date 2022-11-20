@@ -25,7 +25,7 @@
       {% if "issue" in pub %}
         <span class="publication-issue">{{ pub.issue }}</span>
       {% endif %}
-      {% if "status" in pub and pub["status"] != "published" %}
+      {% if pub.status %}
         <span class="publication-status">{{ pub.status }}</span>
       {% endif %}
        (<span class="publication-year">{{ pub.year }}</span>)

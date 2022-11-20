@@ -80,10 +80,11 @@ def process_publications(data):
                 authors = ", ".join(pub["authors"][:-1]) + ", and " + pub["authors"][-1]
             pub["authors"] = authors
 
-            if "journal" not in pub and "book" not in pub:
-                pub["status"] = "submitted"
-            elif "doi" not in pub and "url" not in pub:
-                pub["status"] = "in press"
+            if "status" in pub:
+                if pub["status"] == "press":
+                    pub["status"] = "in press"
+                elif pub["status"] == "published":
+                    pub["status"] = ""
 
             if "doi" in pub:
                 pub["url"] = f'<a href="https://doi.org/{pub["doi"]}" target="_blank">DOI:{pub["doi"]}</a>'
