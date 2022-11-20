@@ -5,11 +5,15 @@
   {% for job in data.jobs %}
     <div class="job">
       <div class="job-date">
-        <div>Opens: <span class="job-date-open">{{ job.open }}</span></div>
+        <div class="job-date-open">Opens: <span class="job-date-open-text">{{ job.open }}</span></div>
         {% if job.close %}
-          <div>Closes: <span class="job-date-close">{{ job.close }}</span></div>
+          <div class="job-date-close">Closes: <span class="job-date-close-text">{{ job.close }}</span></div>
         {% endif %}
-        <div>Status: <span class="job-date-stat open">Open</span></div>
+        <!--
+          If users have JavaScript disabled, the job would always be listed as open.
+          The noscript class keeps the line invisible and will be removed in jobs.js
+        -->
+        <div class="job-date-stat noscript">Status: <span class="job-date-stat-text open">Open</span></div>
       </div>
       <div class="job-description">
         <h2>

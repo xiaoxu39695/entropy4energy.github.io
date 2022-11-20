@@ -406,11 +406,16 @@ footer {
   &-date {
     font-weight: bold;
     &-stat {
-      &.open {
-        color: green;
+      &.noscript{
+        display: none;
       }
-      &.closed {
-        color: red;
+      &-text {
+        &.open {
+          color: green;
+        }
+        &.closed {
+          color: red;
+        }
       }
     }
   }
