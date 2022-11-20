@@ -39,12 +39,12 @@ NODEDIR=node_modules
 NODEBIN=$(NODEDIR)/.bin
 NPMINST=npm install
 
-MAINTARGETS=html css js static
+BUILDTARGETS=html css js static
 INSTALLTARGETS=install-packages css-install js-install html-install py-install
 
-.PHONY: all clean realclean $(MAINTARGETS) $(INSTALLTARGETS) css-static css-compiled
+.PHONY: all clean realclean $(BUILDTARGETS) $(INSTALLTARGETS) css-static css-compiled
 
-all: $(MAINTARGETS)
+all: $(BUILDTARGETS)
 
 # HTML targets
 PREREQSALL=$(BUILDPY) $(DATADIR)/news.json $(TEMPLATEDIR)/base.html
