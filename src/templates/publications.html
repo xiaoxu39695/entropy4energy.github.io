@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% macro pub_html(pub, pub_number) %}
+{% macro pub_html(pub) %}
   <div class="publication">
     <div class="publication-img">
       {% if "imgfile" in pub and "filename" in pub %}
@@ -9,7 +9,7 @@
         </a>
       {% endif %}
     </div>
-    <div class="publication-number">{{ pub_number }}.</div>
+    <div class="publication-number">{{ pub.number }}.</div>
     <div class="publication-data">
       <span class="publication-authors">{{ pub.authors }}</span>
       <span class="publication-title">{{ pub.title }}</span>
@@ -47,7 +47,7 @@
       <h2 id="publications_journal_{{ year }}">{{ year }}</h2>
     {% endif %}
     {% for pub in pubs_year %}
-      {{ pub_html(pub, pub_number) }}
+      {{ pub_html(pub) }}
     {% endfor %}
   {% endfor %}
 {% endmacro %}
