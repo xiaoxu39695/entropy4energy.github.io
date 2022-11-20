@@ -17,6 +17,10 @@
     setTimeout(automaticSlideShow, 7000);
   }
 
+  for (const nscrpt of document.querySelectorAll('.noscript')) {
+    nscrpt.classList.remove('noscript');
+  }
+
   for (const inp of document.querySelectorAll('input[name="slideshow_main_indicators"]')) {
     const slide = inp.nextElementSibling
     slide.addEventListener('click', () => {

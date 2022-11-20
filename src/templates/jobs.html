@@ -9,10 +9,6 @@
         {% if job.close %}
           <div class="job-date-close">Closes: <span class="job-date-close-text">{{ job.close }}</span></div>
         {% endif %}
-        <!--
-          If users have JavaScript disabled, the job would always be listed as open.
-          The noscript class keeps the line invisible and will be removed in jobs.js
-        -->
         <div class="job-date-stat noscript">Status: <span class="job-date-stat-text open">Open</span></div>
       </div>
       <div class="job-description">

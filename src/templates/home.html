@@ -32,8 +32,8 @@
   </p>
   {% if data.slideshow|length > 0 %}
     <div class="slideshow" id="slideshow_main">
-      <input type="checkbox" id="slideshow_main_play" class="slideshow-play" checked>
-      <label for="slideshow_main_play" class="slideshow-indicator"></label>
+      <input type="checkbox" id="slideshow_main_play" class="slideshow-play noscript" checked>
+      <label for="slideshow_main_play" class="slideshow-indicator noscript"></label>
       {% for slide in data.slideshow %}
         {% if loop.index == 1 %}
           {% set checked = " checked" %}

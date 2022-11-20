@@ -34,6 +34,16 @@ $menu-bar-length: 2em;
   font-size: 1em;
 }
 
+/*
+  If users have JavaScript disabled, elements that depend on JavaScript will not work.
+  Unfortunately, there is no "opposite" of the <noscript> tag.
+  To circumvent this, elements with the .noscript class will be invisible by default.
+  In the JavaScript files, the class just needs to be removed for the classList.
+*/
+.noscript {
+  display: none !important;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -406,9 +416,6 @@ footer {
   &-date {
     font-weight: bold;
     &-stat {
-      &.noscript{
-        display: none;
-      }
       &-text {
         &.open {
           color: green;
