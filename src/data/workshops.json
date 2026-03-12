@@ -22,7 +22,19 @@
         "presenter":"Mikail Shaikh",
         "materials": "1RigFRYTKi_LATq_BocSN-M66hBk7_tTP",
         "title": "Nexus demo: Guppy examples and homework" 
-      }
+      },
+      {
+        "presenter":"Mikail Shaikh, Ciaran Ward",
+        "title":"Day 2",
+        "youtube_id":"UiaRxfAsJtY"
+      },
+      {
+        "presenter":"Ciaran Ward",
+        "title":"Resources",
+        "description":"We offer one-month trial access to InQuanto via Quantinuum Nexus. Please enter <a href=\"https://engineering.jhu.edu/materials/event/quantum-computing-in-practice-hands-on-with-quantinuum/\" target=\"_blank\">HERE</a> for the trail."
+      },
+      {
+
     ]
   },
   {
